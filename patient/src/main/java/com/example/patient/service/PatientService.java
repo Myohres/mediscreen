@@ -7,9 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class PatientService {
@@ -19,38 +18,36 @@ public class PatientService {
     @Autowired
     private PatientRepository patientRepository;
 
-    public List<Patient> getPatients() {
-        logger.debug("getPatients");
-        return patientRepository.findAll();
-    }
-
-    public Patient getPatientByPhoneNumber(String phoneNumber)  {
-        logger.info("getPatientByPhoneNumber");
-        Optional<Patient> patient = patientRepository.findPatientByPhoneNumber(phoneNumber);
-        if (patient.isEmpty()) {
-            throw new NoSuchElementException("No such patient with " +phoneNumber);
+    public List<Patient> getPatientByAllInformation(
+            String firstName, String lastName, String dob, String sex,String address, String phone) {
+        logger.debug("getPatientByAllInformation");
+        if (firstName.equals("") && lastName.equals("") && dob.equals("") && sex.equals("") && address.equals("") && phone.equals("")) {
+            return new ArrayList<>();
         }
-        else {
-            return patient.get();
+        List<Patient> patientList = patientRepository.findAll();
+        if (!Objects.equals(firstName, "")) {
+           patientList = patientList.stream().filter(patient -> patient.getFirstName().equals(firstName)).toList();
         }
-    }
-
-    public List<Patient> getPatientByNameAddressBirthDate(String firstName, String lastName, String address, String birthDate)  {
-        logger.debug("getPatientByNameAddressBirthDatePhone");
-        List<Patient> patient = patientRepository
-                .findPatientByFirstNameAndLastNameAndAddressAndBirthDate(firstName, lastName, address, birthDate);
-        if (patient.isEmpty()) {
-            throw new NoSuchElementException("No such patient");
+        if (!Objects.equals(lastName, "")) {
+            patientList = patientList.stream().filter(patient -> patient.getLastName().equals(lastName)).toList();
         }
-        else {
-            return patient;
+        if (!Objects.equals(dob, "")) {
+            patientList = patientList.stream().filter(patient -> patient.getDob().equals(dob)).toList();
         }
+        if (!Objects.equals(sex, "")) {
+            patientList = patientList.stream().filter(patient -> patient.getSex().equals(sex)).toList();
+        }
+        if (!Objects.equals(address, "")) {
+            patientList = patientList.stream().filter(patient -> patient.getAddress().equals(address)).toList();
+        }
+        if (!Objects.equals(phone, "")) {
+            patientList = patientList.stream().filter(patient -> patient.getPhone().equals(phone)).toList();
+        }
+        return patientList;
     }
 
     public Patient savePatient(Patient patient) {
         logger.debug("savePatient");
         return patientRepository.save(patient);
     }
-
-
 }

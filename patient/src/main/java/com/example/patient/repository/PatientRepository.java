@@ -8,12 +8,4 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface PatientRepository extends MongoRepository<Patient, String> {
-
-    Patient findPatientById(String id);
-
-    List<Patient> findPatientByFirstNameAndLastNameAndAddressAndBirthDate(
-            String firstName, String lastName, String address, String birthDate);
-
-    Optional<Patient> findPatientByPhoneNumber(String phoneNumber);
-}
+public interface PatientRepository extends MongoRepository<Patient, String> {}

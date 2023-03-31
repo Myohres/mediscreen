@@ -14,15 +14,15 @@ public class Patient {
     @Id
     private String id;
     @NonNull
-    private String firstName;
+    private String firstName = "";
     @NonNull
-    private String lastName;
+    private String lastName = "";
     @NonNull
-    private String birthDate;
+    private String dob = "";
     @NonNull
-    private String genre;
+    private String sex= "";
     @NonNull
-    private String address;
+    private String address = "";
     @NonNull
-    private String phoneNumber;
+    private String phone= "";
 }
