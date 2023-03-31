@@ -1,0 +1,59 @@
+
+
+<div class="d-flex justify-content-around">
+  <h1>Patient</h1>
+</div>
+
+<div class="d-flex justify-content-around">
+  Searching Patient
+</div>
+
+<div class="d-flex justify-content-around">
+  <form >
+    <div class="form-group mb-2">
+      <input [formControl]="firstName" class="form-control" placeholder="Firstname">
+      <input [formControl]="lastName" class="form-control" placeholder="Lastname">
+      <input [formControl]="dob" class="form-control" placeholder="Birthdate YYYY-MM-DD">
+      <input [formControl]="sex" class="form-control" placeholder="Gender M or F">
+      <input [formControl]="address" class="form-control" placeholder="Address">
+      <input [formControl]="phoneNumber" class="form-control" placeholder="Phone">
+    </div>
+    <div class="form-group mx-sm-3 mb-2">
+      <button (click)="getPatient()" type="button" class="btn btn-primary mb-2">Find patient</button>
+    </div>
+  </form>
+</div>
+
+<div class="d-flex justify-content-around">
+
+  <div class="p-2">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="col">Firstname</th>
+        <th scope="col">Lastname</th>
+        <th scope="col">Birthdate</th>
+        <th scope="col">Genre</th>
+        <th scope="col">Address</th>
+        <th scope="col">Phone</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let patient of patientData">
+        <th scope="row">{{patient.firstName }}</th>
+        <td>{{ patient.lastName }}</td>
+        <td>{{ patient.dob }}</td>
+        <td>{{ patient.sex }}</td>
+        <td>{{ patient.address }}</td>
+        <td>{{ patient.phone }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+</div>
+
+
+
+
