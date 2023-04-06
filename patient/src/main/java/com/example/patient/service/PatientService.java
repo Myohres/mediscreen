@@ -43,6 +43,9 @@ public class PatientService {
         if (!Objects.equals(phone, "")) {
             patientList = patientList.stream().filter(patient -> patient.getPhone().equals(phone)).toList();
         }
+        if (patientList.isEmpty()) {
+            throw new NoSuchElementException("No patient found");
+        }
         return patientList;
     }
 
