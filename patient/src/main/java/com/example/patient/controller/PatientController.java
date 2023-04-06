@@ -26,27 +26,27 @@ public class PatientController {
     public PatientService patientService;
 
     @GetMapping("/")
-    public ResponseEntity<List<Patient>> getPatientByAllInformation(
-           final String firstName,
-           final String lastName,
+    public ResponseEntity<List<Patient>> getPatient(
+           final String family,
+           final String given,
            final String dob,
            final String sex,
            final String address,
            final String phone) {
-        logger.info("GET/firstName/" + firstName + "/lastName/" + lastName + "/birthDate/" + dob
+        logger.info("GET/family/" + family + "/given/" + given + "/birthDate/" + dob
                 + "/sex/" + sex + "/address/" + address + "/phone/" + phone);
         try {
             return ResponseEntity.ok(
-                    patientService.getPatientByAllInformation(firstName, lastName, dob, sex, address, phone));
+                    patientService.getPatientByAllInformation(family, given, dob, sex, address, phone));
         } catch (NoSuchElementException e) {
-            logger.error("getPatientByPhoneNumber error : " + e.getMessage());
+            logger.error("getPatient error : " + e.getMessage());
             return ResponseEntity.notFound().build();
         }
     }
     @PostMapping("/add")
     public ResponseEntity<Patient> addPatient(
             final Patient patient) {
-        logger.info("POST/" + patient.getFirstName());
+        logger.info("POST/" + patient.getFamily());
         try {
             return ResponseEntity.ok(patientService.savePatient(patient));
         } catch (NoSuchElementException e) {

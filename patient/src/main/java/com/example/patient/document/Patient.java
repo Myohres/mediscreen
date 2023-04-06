@@ -14,9 +14,9 @@ public class Patient {
     @Id
     private String id;
     @NonNull
-    private String firstName = "";
+    private String family = "";
     @NonNull
-    private String lastName = "";
+    private String given = "";
     @NonNull
     private String dob = "";
     @NonNull

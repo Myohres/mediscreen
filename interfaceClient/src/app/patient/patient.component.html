@@ -11,8 +11,8 @@
 <div class="d-flex justify-content-around">
   <form >
     <div class="form-group mb-2">
-      <input [formControl]="firstName" class="form-control" placeholder="Firstname">
-      <input [formControl]="lastName" class="form-control" placeholder="Lastname">
+      <input [formControl]="family" class="form-control" placeholder="Lastname">
+      <input [formControl]="given" class="form-control" placeholder=Firstname"">
       <input [formControl]="dob" class="form-control" placeholder="Birthdate YYYY-MM-DD">
       <input [formControl]="sex" class="form-control" placeholder="Gender M or F">
       <input [formControl]="address" class="form-control" placeholder="Address">
@@ -30,8 +30,8 @@
     <table class="table table-striped">
       <thead>
       <tr>
-        <th scope="col">Firstname</th>
         <th scope="col">Lastname</th>
+        <th scope="col">Firstname</th>
         <th scope="col">Birthdate</th>
         <th scope="col">Genre</th>
         <th scope="col">Address</th>
@@ -40,8 +40,8 @@
       </thead>
       <tbody>
       <tr *ngFor="let patient of patientData">
-        <th scope="row">{{patient.firstName }}</th>
-        <td>{{ patient.lastName }}</td>
+        <th scope="row">{{patient.family }}</th>
+        <td>{{ patient.given }}</td>
         <td>{{ patient.dob }}</td>
         <td>{{ patient.sex }}</td>
         <td>{{ patient.address }}</td>

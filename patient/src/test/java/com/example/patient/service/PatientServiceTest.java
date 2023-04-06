@@ -39,8 +39,8 @@ class PatientServiceTest {
 
         patient1 = new Patient();
         patient1.setId("1");
-        patient1.setFirstName("John");
-        patient1.setLastName("Connor");
+        patient1.setFamily("John");
+        patient1.setGiven("Connor");
         patient1.setDob("18-04-1989");
         patient1.setAddress("1 rue ville");
         patient1.setSex("H");
@@ -49,8 +49,8 @@ class PatientServiceTest {
 
         patient2 = new Patient();
         patient2.setId("2");
-        patient2.setFirstName("Jane");
-        patient2.setLastName("Seymour");
+        patient2.setFamily("Jane");
+        patient2.setGiven("Seymour");
         patient2.setDob("20-02-1970");
         patient2.setAddress("3 av ville");
         patient2.setSex("F");
@@ -59,8 +59,8 @@ class PatientServiceTest {
 
         patient3 = new Patient();
         patient3.setId("3");
-        patient3.setFirstName("Will");
-        patient3.setLastName("Turner");
+        patient3.setFamily("Will");
+        patient3.setGiven("Turner");
         patient3.setDob("10-03-1985");
         patient3.setAddress("10 rue Fort");
         patient3.setSex("H");

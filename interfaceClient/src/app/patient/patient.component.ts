@@ -12,8 +12,8 @@ import {FormControl} from "@angular/forms";
 export class PatientComponent implements OnInit {
 
   public patientData: Patient[] = [];
-  public lastName = new FormControl();
-  public firstName = new FormControl();
+  public given = new FormControl();
+  public family = new FormControl();
   public dob = new FormControl();
   public sex = new FormControl();
   public address = new FormControl();
@@ -23,8 +23,8 @@ export class PatientComponent implements OnInit {
 
   ngOnInit(): void {
     this.patientData = []
-    this.lastName.setValue("")
-    this.firstName.setValue("")
+    this.given.setValue("")
+    this.family.setValue("")
     this.dob.setValue("")
     this.sex.setValue("")
     this.address.setValue("")
@@ -53,21 +53,21 @@ export class PatientComponent implements OnInit {
 
   getPatient(){
 
-    this.patientService.getPatientAllInformation(this.firstName.value, this.lastName.value, this.dob.value, this.sex.value, this.address.value, this.phoneNumber.value)
+    this.patientService.getPatientAllInformation(this.family.value, this.given.value, this.dob.value, this.sex.value, this.address.value, this.phoneNumber.value)
       .subscribe({
         next: data => this.patientData = data,
         error: err => console.error(+err),
         complete: () => console.log("get patient complete")
       })
 
-    this.lastName.reset()
-    this.firstName.reset()
+    this.given.reset()
+    this.family.reset()
     this.dob.reset()
     this.sex.reset()
     this.address.reset()
     this.phoneNumber.reset()
-    this.lastName.setValue("")
-    this.firstName.setValue("")
+    this.given.setValue("")
+    this.family.setValue("")
     this.dob.setValue("")
     this.sex.setValue("")
     this.address.setValue("")

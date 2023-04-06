@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class PatientService {
@@ -19,17 +18,17 @@ public class PatientService {
     private PatientRepository patientRepository;
 
     public List<Patient> getPatientByAllInformation(
-            String firstName, String lastName, String dob, String sex,String address, String phone) {
+            String family, String given, String dob, String sex,String address, String phone) {
         logger.debug("getPatientByAllInformation");
-        if (firstName.equals("") && lastName.equals("") && dob.equals("") && sex.equals("") && address.equals("") && phone.equals("")) {
+        if (family.equals("") && given.equals("") && dob.equals("") && sex.equals("") && address.equals("") && phone.equals("")) {
             return new ArrayList<>();
         }
         List<Patient> patientList = patientRepository.findAll();
-        if (!Objects.equals(firstName, "")) {
-           patientList = patientList.stream().filter(patient -> patient.getFirstName().equals(firstName)).toList();
+        if (!Objects.equals(family, "")) {
+           patientList = patientList.stream().filter(patient -> patient.getFamily().equals(family)).toList();
         }
-        if (!Objects.equals(lastName, "")) {
-            patientList = patientList.stream().filter(patient -> patient.getLastName().equals(lastName)).toList();
+        if (!Objects.equals(given, "")) {
+            patientList = patientList.stream().filter(patient -> patient.getGiven().equals(given)).toList();
         }
         if (!Objects.equals(dob, "")) {
             patientList = patientList.stream().filter(patient -> patient.getDob().equals(dob)).toList();

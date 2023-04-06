@@ -13,8 +13,8 @@ export class PatientService {
 
   private _patient: Patient = {
     id: "",
-    firstName: "",
-    lastName: "",
+    family: "",
+    given: "",
     dob: "",
     sex: "",
     address: "",
@@ -24,19 +24,11 @@ export class PatientService {
   constructor(private http: HttpClient){
   }
 
-  public getAllPatients(): Observable<Patient[]> {
-    return this.http.get<Patient[]>(this.rootURL)
-  }
-
-  public getPatientByPhone(phone: string): Observable<Patient[]>{
-    return this.http.get<Patient[]>(`${this.rootURL}/phone/${phone}`)
-  }
-
-  public getPatientAllInformation(firstName: string, lastName: string, dob: string, sex: string, address: string, phone :string): Observable<Patient[]>{
+  public getPatientAllInformation(family: string, given: string, dob: string, sex: string, address: string, phone :string): Observable<Patient[]>{
     return this.http.get<Patient[]>(`${this.rootURL}/`, {
       params: {
-        firstName: firstName,
-        lastName: lastName,
+        family: family,
+        given: given,
         dob: dob,
         sex: sex,
         address: address,
@@ -58,11 +50,11 @@ export class PatientService {
   }
 
   get patientFirstName(): string {
-    return this._patient.firstName;
+    return this._patient.family;
   }
 
   get patientLastName(): string {
-    return this._patient.lastName;
+    return this._patient.given;
   }
 
   get patientBirthDate(): string {
@@ -86,11 +78,11 @@ export class PatientService {
   }
 
   set patientFirstName(value: string) {
-    this._patient.firstName = value;
+    this._patient.family = value;
   }
 
   set patientLastName(value: string) {
-    this._patient.lastName = value;
+    this._patient.given = value;
   }
 
   set patientBirthDate(value: string) {
