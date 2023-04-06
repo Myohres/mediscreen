@@ -32,25 +32,6 @@ export class PatientComponent implements OnInit {
 
   }
 
-  getAllPatients(){
-    this.patientService.getAllPatients()
-      .subscribe({
-        next: data => this.patientData = data,
-        error: err => console.error(+err),
-        complete: () => console.log("get all patients complete")
-      })
-  }
-
-  getPatientsByPhone(){
-   this.patientData = [];
-    this.patientService.getPatientByPhone(this.phoneNumber.value)
-      .subscribe({
-        next: data => this.patientData = data,
-        error: err => console.error(+err),
-        complete: () => console.log("get patient by phone complete")
-      })
-  }
-
   getPatient(){
 
     this.patientService.getPatientAllInformation(this.family.value, this.given.value, this.dob.value, this.sex.value, this.address.value, this.phoneNumber.value)
