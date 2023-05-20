@@ -6,15 +6,16 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AppRoutingModule} from "./app-rooting-module";
 import {HttpClientModule} from "@angular/common/http";
 import { PatientComponent } from './patient/patient.component';
+import { PatientUpdateComponent } from './patient-update/patient-update.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PatientComponent
+    PatientComponent,
+    PatientUpdateComponent
   ],
   imports: [
     BrowserModule,
-    FormsModule,
     HttpClientModule,
     AppRoutingModule,
     ReactiveFormsModule

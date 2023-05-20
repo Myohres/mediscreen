@@ -33,7 +33,6 @@ export class PatientComponent implements OnInit {
   }
 
   getPatient(){
-
     this.patientService.getPatientAllInformation(this.family.value, this.given.value, this.dob.value, this.sex.value, this.address.value, this.phoneNumber.value)
       .subscribe({
         next: data => this.patientData = data,
@@ -53,5 +52,10 @@ export class PatientComponent implements OnInit {
     this.sex.setValue("")
     this.address.setValue("")
     this.phoneNumber.setValue("")
+  }
+
+  SetPatientToUpdatePage(patient: Patient){
+    this.patientService.set_patient(patient)
+
   }
 }

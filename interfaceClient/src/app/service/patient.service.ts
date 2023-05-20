@@ -21,10 +21,10 @@ export class PatientService {
     phone: "",
   }
 
-  constructor(private http: HttpClient){
+  constructor(private http: HttpClient) {
   }
 
-  public getPatientAllInformation(family: string, given: string, dob: string, sex: string, address: string, phone :string): Observable<Patient[]>{
+  public getPatientAllInformation(family: string, given: string, dob: string, sex: string, address: string, phone :string): Observable<Patient[]> {
     return this.http.get<Patient[]>(`${this.rootURL}/`, {
       params: {
         family: family,
@@ -37,11 +37,28 @@ export class PatientService {
       })
   }
 
-  get patient(): Patient {
+  public updatePatient(id: string, patient: Patient): Observable<Patient> {
+    return this.http.put<Patient>(`${this.rootURL}/update/id/${id}`,patient, {
+      params: {
+        family: patient.family,
+        given: patient.given,
+        dob: patient.dob,
+        sex: patient.sex,
+        address: patient.address,
+        phone: patient.phone
+      },
+    })
+  }
+
+  public savePatient( patient: Patient): Observable<Patient> {
+    return this.http.post<Patient>(`${this.rootURL}/add`, patient)
+  }
+
+  get_patient(): Patient {
     return this._patient;
   }
 
-  set patient(value: Patient) {
+  set_patient(value: Patient) {
     this._patient = value;
   }
 
