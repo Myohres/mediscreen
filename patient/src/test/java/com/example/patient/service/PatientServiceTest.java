@@ -12,6 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -69,6 +70,19 @@ class PatientServiceTest {
     }
 
     @Test
+    void getPatientById() {
+        when(patientRepository.findById("1")).thenReturn(Optional.of(patient1));
+        Patient patient = patientService.getPatientById("1");
+        assertEquals("1", patient.getId());
+    }
+
+    @Test
+    void getPatientByIdNoFound() {
+        when(patientRepository.findById("1")).thenReturn(Optional.empty());
+        assertThrows(NoSuchElementException.class, () -> patientService.getPatientById("1"));
+    }
+
+    @Test
     void getPatientByAllInformationWithNoInfo() {
        List<Patient> patientListTest = patientService.getPatientByAllInformation("","","","","","");
        assertEquals(0, patientListTest.size());
@@ -99,5 +113,25 @@ class PatientServiceTest {
         when(patientRepository.save(any())).thenReturn(patient1);
         patientService.savePatient(patient1);
         verify(patientRepository,times(1)).save(patient1);
+    }
+
+    @Test
+    void updatePatient() {
+        when(patientRepository.findById("1")).thenReturn(Optional.of(patient1));
+        Patient patientUpdate = new Patient();
+        patientUpdate.setId(patient1.getId());
+        patientUpdate.setFamily("ConnorUp");
+        patientUpdate.setGiven("JohnUp");
+        patientUpdate.setDob("1989-04-18Up");
+        patientUpdate.setSex("HUp");
+        patientUpdate.setAddress("1 rue villeUp");
+        patientUpdate.setPhone("1234Up");
+        patientService.updatePatient(patient1.getId(),patientUpdate);
+        assertEquals("ConnorUp", patient1.getFamily());
+        assertEquals("JohnUp", patient1.getGiven());
+        assertEquals("1989-04-18Up", patient1.getDob());
+        assertEquals("HUp", patient1.getSex());
+        assertEquals("1 rue villeUp", patient1.getAddress());
+        assertEquals("1234Up", patient1.getPhone());
     }
 }

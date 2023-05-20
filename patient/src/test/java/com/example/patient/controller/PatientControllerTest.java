@@ -69,5 +69,21 @@ class PatientControllerTest {
                 .andExpect(status().isNotFound());
     }
 
+    @Test
+    void updatePatient() throws Exception {
+        when(patientService.updatePatient("1",new Patient())).thenReturn(new Patient());
+        mvc.perform(put("/patient/update/id/1")
+                .contentType(MediaType.APPLICATION_JSON).content("{}"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void updatePatientNotFound() throws Exception {
+        when(patientService.updatePatient(any(),any())).thenThrow(new NoSuchElementException());
+        mvc.perform(put("/patient/update/id/1")
+                        .contentType(MediaType.APPLICATION_JSON).content("{}"))
+                        .andExpect(status().isNotFound());
+    }
+
 
 }
