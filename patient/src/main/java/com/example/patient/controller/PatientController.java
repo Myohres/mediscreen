@@ -6,11 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -46,11 +42,26 @@ public class PatientController {
     @PostMapping("/add")
     public ResponseEntity<Patient> addPatient(
             final Patient patient) {
-        logger.info("POST/" + patient.getFamily());
+        logger.info("POST/" + patient.getFamily() + "/given/" + patient.getGiven() + "/birthDate/" + patient.getDob()
+                + "/sex/" + patient.getSex() + "/address/" + patient.getAddress() + "/phone/" + patient.getPhone());
         try {
             return ResponseEntity.ok(patientService.savePatient(patient));
         } catch (NoSuchElementException e) {
             logger.error("savePatient error : " + e);
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/update/id/{id}")
+    public ResponseEntity<Patient> updatePatient(
+            @PathVariable String id, Patient patient
+           /* String family, String given, String dob, String sex, String address, String phone*/) {
+      logger.info("PUT/patient/update" + patient.getFamily() + "/given/" + patient.getGiven() + "/birthDate/" + patient.getDob()
+                + "/sex/" + patient.getSex() + "/address/" + patient.getAddress() + "/phone/" + patient.getPhone());
+        try {
+            return ResponseEntity.ok(patientService.updatePatient(id, patient));
+        } catch (NoSuchElementException e) {
+            logger.error("updatePatient error : " + e);
             return ResponseEntity.notFound().build();
         }
     }

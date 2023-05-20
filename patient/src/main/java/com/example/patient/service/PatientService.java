@@ -17,6 +17,12 @@ public class PatientService {
     @Autowired
     private PatientRepository patientRepository;
 
+    public Patient getPatientById(String id) {
+        logger.debug("getPatientById");
+        return patientRepository.findById(id).orElseThrow(
+                () -> new NoSuchElementException("No such patient with id " + id));
+    }
+
     public List<Patient> getPatientByAllInformation(
             String family, String given, String dob, String sex,String address, String phone) {
         logger.debug("getPatientByAllInformation");
@@ -25,7 +31,7 @@ public class PatientService {
         }
         List<Patient> patientList = patientRepository.findAll();
         if (!Objects.equals(family, "")) {
-           patientList = patientList.stream().filter(patient -> patient.getFamily().equals(family)).toList();
+            patientList = patientList.stream().filter(patient -> patient.getFamily().equals(family)).toList();
         }
         if (!Objects.equals(given, "")) {
             patientList = patientList.stream().filter(patient -> patient.getGiven().equals(given)).toList();
@@ -51,5 +57,17 @@ public class PatientService {
     public Patient savePatient(Patient patient) {
         logger.debug("savePatient");
         return patientRepository.save(patient);
+    }
+
+    public Patient updatePatient(String id,Patient patient) {
+        logger.debug("updatePatient");
+        Patient patientToUpdate = getPatientById(id);
+        patientToUpdate.setFamily(patient.getFamily());
+        patientToUpdate.setGiven(patient.getGiven());
+        patientToUpdate.setSex(patient.getSex());
+        patientToUpdate.setDob(patient.getDob());
+        patientToUpdate.setAddress(patient.getAddress());
+        patientToUpdate.setPhone(patient.getPhone());
+        return patientRepository.save(patientToUpdate);
     }
 }
