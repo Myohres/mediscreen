@@ -50,8 +50,17 @@ export class PatientService {
     })
   }
 
-  public savePatient( patient: Patient): Observable<Patient> {
-    return this.http.post<Patient>(`${this.rootURL}/add`, patient)
+  public addPatient( patient: Patient): Observable<Patient> {
+    return this.http.post<Patient>(`${this.rootURL}/add`, patient,{
+      params: {
+        family: patient.family,
+        given: patient.given,
+        dob: patient.dob,
+        sex: patient.sex,
+        address: patient.address,
+        phone: patient.phone
+      },
+    })
   }
 
   get_patient(): Patient {

@@ -25,7 +25,8 @@
       <p></p>
     </div>
     <div class="form-group mb-3">
-      <button (click)="getPatient()" type="button" class="btn btn-primary mb-2">Find patient</button>
+      <p><button (click)="getPatient()" type="button" class="btn btn-primary mb-2">Find patient</button></p>
+      <p> <a [routerLink]="['/patient/add']"><button type="button" class="btn btn-primary mb-2">Add patient</button></a></p>
     </div>
   </form>
 </div>
