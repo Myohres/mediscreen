@@ -10,14 +10,17 @@
 
 <div class="d-flex justify-content-around">
   <form >
-    <div >
-      <input [formControl]="family" class="form-control" placeholder="Lastname*" >
-      <input [formControl]="given" class="form-control" placeholder="Firstname*" required>
-      <input [formControl]="dob" class="form-control" placeholder="Birthdate (YYYY-MM-DD)*" required>
-      <input [formControl]="sex" class="form-control" placeholder="Gender (M / F)*" required>
-      <input [formControl]="address" class="form-control" placeholder="Address">
-      <input [formControl]="phone" class="form-control" placeholder="Phone">
-    </div>
+    <input [formControl]="family" id="family2" class="form-control" placeholder="Lastname*" >
+    <p>{{errorMessageFamily}}</p>
+    <input [formControl]="given" class="form-control" placeholder="Firstname*" required>
+    <p>{{errorMessageGiven}}</p>
+    <input [formControl]="dob" class="form-control" placeholder="Birthdate (YYYY-MM-DD)*" required>
+    <p>{{errorMessageDob}}</p>
+    <input [formControl]="sex" class="form-control" placeholder="Gender (M / F)*" required>
+    <p>{{errorMessageSex}}</p>
+    <input [formControl]="address" class="form-control" placeholder="Address">
+    <p></p>
+    <input [formControl]="phone" class="form-control" placeholder="Phone">
     <p>{{message}}</p>
     <div class="form-group mx-sm-3 mb-2">
       <button type="button" (click)="updatePatient()" class="btn btn-primary mb-2">Update patient</button>

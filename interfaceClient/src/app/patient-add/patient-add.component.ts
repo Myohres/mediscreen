@@ -18,7 +18,12 @@ export class PatientAddComponent implements OnInit {
   phone: FormControl = new FormControl();
 
   message: string = '';
-  validationVerification: boolean = false;
+
+  errorInput: boolean = false;
+  errorMessageFamily: string = "";
+  errorMessageGiven: string = "";
+  errorMessageDob: string = "";
+  errorMessageSex: string= "";
 
   patientToAdd: Patient = {
     id: "",
@@ -32,19 +37,18 @@ export class PatientAddComponent implements OnInit {
 
   constructor(private patientService: PatientService) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   addPatient() {
-    this.patientToAdd.given = this.given.value;
     this.patientToAdd.family = this.family.value;
+    this.patientToAdd.given = this.given.value;
     this.patientToAdd.dob = this.dob.value;
     this.patientToAdd.sex = this.sex.value;
     this.patientToAdd.address = this.address.value;
     this.patientToAdd.phone = this.phone.value;
 
     this.verificationInput()
-    if (this.validationVerification) {
+    if (!this.errorInput) {
       this.patientService.addPatient(this.patientToAdd).subscribe({
         next: value => {},
         error: error => {console.log("error")},
@@ -58,12 +62,35 @@ export class PatientAddComponent implements OnInit {
   }
 
   verificationInput() {
-    if (this.given.value != "" && this.family.value != "" && this.dob.value != "" && this.sex.value != "") {
-      this.validationVerification = true;
+    if ((this.family.value == null) || (this.family.value == "")) {
+      this.errorMessageFamily = "Family is mandatory";
+      this.errorInput = true;
     } else {
-      this.message = "Lastname, firstname, birthdate and gender are mandatory"
+      this.errorMessageFamily = "";
+      this.errorInput = false;
     }
-
+    if (this.given.value == null || (this.given.value == "")) {
+      this.errorMessageGiven = "Given is mandatory";
+      this.errorInput = true;
+    } else {
+      this.errorMessageGiven = "";
+      this.errorInput = false;
+    }
+    if (this.dob.value == null || (this.dob.value == "")) {
+      this.errorMessageDob = "Birthdate is mandatory";
+      this.errorInput = true;
+    }
+    else {
+      this.errorMessageDob = "";
+      this.errorInput = false;
+    }
+    if (this.sex.value == null || (this.sex.value == "")) {
+      this.errorMessageSex = "Gender is mandatory";
+      this.errorInput = true;
+    } else {
+      this.errorMessageSex = "";
+      this.errorInput = false
+    }
   }
 
 

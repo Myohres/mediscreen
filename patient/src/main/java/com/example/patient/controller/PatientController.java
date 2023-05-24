@@ -41,7 +41,7 @@ public class PatientController {
     }
     @PostMapping("/add")
     public ResponseEntity<Patient> addPatient(
-            final Patient patient) {
+             Patient patient) {
         logger.info("POST/" + patient.getFamily() + "/given/" + patient.getGiven() + "/birthDate/" + patient.getDob()
                 + "/sex/" + patient.getSex() + "/address/" + patient.getAddress() + "/phone/" + patient.getPhone());
         try {
@@ -68,7 +68,7 @@ public class PatientController {
             logger.error("updatePatient error : " + e);
             return ResponseEntity.notFound().build();
         } catch (NullPointerException e) {
-            logger.error("savePatient error : " +e.getMessage());
+            logger.error("UpdatePatient error : " +e.getMessage());
             return ResponseEntity.badRequest().build();
         }
     }

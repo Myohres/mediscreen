@@ -18,7 +18,12 @@ export class PatientUpdateComponent implements OnInit {
   phone: FormControl = new FormControl();
 
   message: string = '';
-  validationVerification: boolean = false;
+
+  errorInput: boolean = false;
+  errorMessageFamily: string = "";
+  errorMessageGiven: string = "";
+  errorMessageDob: string = "";
+  errorMessageSex: string= "";
 
   patientToUpdate: Patient = {
     id: "",
@@ -52,7 +57,7 @@ export class PatientUpdateComponent implements OnInit {
     this.patientToUpdate.phone = this.phone.value;
 
     this.verificationInput()
-    if (this.validationVerification) {
+    if (!this.errorInput) {
       this.patientService.updatePatient(this.patientToUpdate.id,
         this.patientToUpdate).subscribe({
         next: value => {},
@@ -67,11 +72,34 @@ export class PatientUpdateComponent implements OnInit {
   }
 
   verificationInput() {
-    if (this.given.value != "" && this.family.value != "" && this.dob.value != "" && this.sex.value != "") {
-      this.validationVerification = true;
+    if ((this.family.value == null) || (this.family.value == "")) {
+      this.errorMessageFamily = "Family is mandatory";
+      this.errorInput = true;
     } else {
-      this.message = "Lastname, firstname, birthdate and gender are mandatory"
+      this.errorMessageFamily = "";
+      this.errorInput = false;
     }
-
+    if (this.given.value == null || (this.given.value == "")) {
+      this.errorMessageGiven = "Given is mandatory";
+      this.errorInput = true;
+    } else {
+      this.errorMessageGiven = "";
+      this.errorInput = false;
+    }
+    if (this.dob.value == null || (this.dob.value == "")) {
+      this.errorMessageDob = "Birthdate is mandatory";
+      this.errorInput = true;
+    }
+    else {
+      this.errorMessageDob = "";
+      this.errorInput = false;
+    }
+    if (this.sex.value == null || (this.sex.value == "")) {
+      this.errorMessageSex = "Gender is mandatory";
+      this.errorInput = true;
+    } else {
+      this.errorMessageSex = "";
+      this.errorInput = false
+    }
   }
 }
