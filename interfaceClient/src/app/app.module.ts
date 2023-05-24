@@ -7,12 +7,14 @@ import {AppRoutingModule} from "./app-rooting-module";
 import {HttpClientModule} from "@angular/common/http";
 import { PatientComponent } from './patient/patient.component';
 import { PatientUpdateComponent } from './patient-update/patient-update.component';
+import { PatientAddComponent } from './patient-add/patient-add.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PatientComponent,
-    PatientUpdateComponent
+    PatientUpdateComponent,
+    PatientAddComponent
   ],
   imports: [
     BrowserModule,
