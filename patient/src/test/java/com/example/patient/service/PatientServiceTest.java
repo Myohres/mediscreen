@@ -134,4 +134,10 @@ class PatientServiceTest {
         assertEquals("1 rue villeUp", patient1.getAddress());
         assertEquals("1234Up", patient1.getPhone());
     }
+
+    @Test
+    void validationPatient() {
+        Patient patient = new Patient();
+        assertThrows(NullPointerException.class, () -> patientService.validationPatient(patient));
+    }
 }

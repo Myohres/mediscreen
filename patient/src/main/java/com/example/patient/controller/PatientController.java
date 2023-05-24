@@ -45,24 +45,31 @@ public class PatientController {
         logger.info("POST/" + patient.getFamily() + "/given/" + patient.getGiven() + "/birthDate/" + patient.getDob()
                 + "/sex/" + patient.getSex() + "/address/" + patient.getAddress() + "/phone/" + patient.getPhone());
         try {
+            patientService.validationPatient(patient);
             return ResponseEntity.ok(patientService.savePatient(patient));
         } catch (NoSuchElementException e) {
             logger.error("savePatient error : " + e);
             return ResponseEntity.notFound().build();
+        } catch (NullPointerException e) {
+            logger.error("savePatient error : " +e.getMessage());
+            return ResponseEntity.badRequest().build();
         }
     }
 
     @PutMapping("/update/id/{id}")
     public ResponseEntity<Patient> updatePatient(
-            @PathVariable String id, Patient patient
-           /* String family, String given, String dob, String sex, String address, String phone*/) {
-      logger.info("PUT/patient/update" + patient.getFamily() + "/given/" + patient.getGiven() + "/birthDate/" + patient.getDob()
+            @PathVariable String id, Patient patient) {
+      logger.info("PUT/patient/update/id/" + patient.getFamily() + "/given/" + patient.getGiven() + "/birthDate/" + patient.getDob()
                 + "/sex/" + patient.getSex() + "/address/" + patient.getAddress() + "/phone/" + patient.getPhone());
         try {
+            patientService.validationPatient(patient);
             return ResponseEntity.ok(patientService.updatePatient(id, patient));
         } catch (NoSuchElementException e) {
             logger.error("updatePatient error : " + e);
             return ResponseEntity.notFound().build();
+        } catch (NullPointerException e) {
+            logger.error("savePatient error : " +e.getMessage());
+            return ResponseEntity.badRequest().build();
         }
     }
 }

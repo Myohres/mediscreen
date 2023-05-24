@@ -70,4 +70,33 @@ public class PatientService {
         patientToUpdate.setPhone(patient.getPhone());
         return patientRepository.save(patientToUpdate);
     }
+
+    public void validationPatient(Patient patient) throws NullPointerException {
+        String errorMessage1 = "";
+        String errorMessage2 = "";
+        String errorMessage3 = "";
+        String errorMessage4 = "";
+        boolean error = false;
+        if (patient.getFamily() == null || patient.getFamily().isEmpty() || patient.getFamily().isBlank()) {
+            errorMessage1 = "family";
+            error = true;
+        }
+        if (patient.getGiven() == null || patient.getGiven().isEmpty() || patient.getGiven().isBlank()) {
+            errorMessage2 = "given";
+            error = true;
+        }
+        if (patient.getDob() == null || patient.getDob().isEmpty() || patient.getDob().isBlank()) {
+            errorMessage3 = "Birthdate";
+            error = true;
+        }
+        if (patient.getSex() == null || patient.getSex().isEmpty() || patient.getSex().isBlank()) {
+            errorMessage4 = "sex";
+            error = true;
+        }
+        if (error) {
+            throw new NullPointerException(errorMessage1 + " " + errorMessage2 + " " + errorMessage3 + " " + errorMessage4 + " mandatory");
+        }
+
+
+    }
 }

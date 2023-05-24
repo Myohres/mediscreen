@@ -21,6 +21,7 @@ import java.util.NoSuchElementException;
 
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -70,6 +71,13 @@ class PatientControllerTest {
     }
 
     @Test
+    void addPatientInvalidInput() throws Exception {
+       doThrow(new NullPointerException()).when(patientService).validationPatient(any());
+        mvc.perform(post("/patient/add"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
     void updatePatient() throws Exception {
         when(patientService.updatePatient("1",new Patient())).thenReturn(new Patient());
         mvc.perform(put("/patient/update/id/1")
@@ -83,6 +91,13 @@ class PatientControllerTest {
         mvc.perform(put("/patient/update/id/1")
                         .contentType(MediaType.APPLICATION_JSON).content("{}"))
                         .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void updatePatientInvalidInput() throws Exception {
+        doThrow(new NullPointerException()).when(patientService).validationPatient(any());
+        mvc.perform(put("/patient/update/id/1"))
+                .andExpect(status().isBadRequest());
     }
 
 

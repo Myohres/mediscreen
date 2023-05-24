@@ -21,8 +21,6 @@ public class Patient {
     private String dob = "";
     @NonNull
     private String sex= "";
-    @NonNull
     private String address = "";
-    @NonNull
     private String phone= "";
 }
