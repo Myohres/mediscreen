@@ -7,26 +7,52 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.NoSuchElementException;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Objects;
 
 @Service
 public class PatientService {
 
+    /** Logger control. */
     private final Logger logger = LoggerFactory.getLogger(PatientService.class);
 
+    /** Repository patient layer. */
     @Autowired
     private PatientRepository patientRepository;
 
-    public Patient getPatientById(String id) {
+    /**
+     * Find patient by his id.
+     * @param id patient id
+     * @return Patient
+     */
+    public Patient getPatientById(final String id) {
         logger.debug("getPatientById");
         return patientRepository.findById(id).orElseThrow(
                 () -> new NoSuchElementException("No such patient with id " + id));
     }
 
-    public List<Patient> getPatientByAllInformation(
-            String family, String given, String dob, String sex,String address, String phone) {
-        logger.debug("getPatientByAllInformation");
-        if (family.equals("") && given.equals("") && dob.equals("") && sex.equals("") && address.equals("") && phone.equals("")) {
+    /**
+     * Find a patient by all his information service.
+     * @param family familyName of the patient
+     * @param given GivenName of the patient
+     * @param dob BirthDate of the patient
+     * @param sex Gender of the patient
+     * @param address address of the patient
+     * @param phone phone number of the patient
+     * @return Patient
+     */
+    public List<Patient> getPatientByAllInputs(
+            final String family,
+            final String given,
+            final String dob,
+            final String sex,
+            final String address,
+            final String phone) {
+        logger.debug("getPatientByAllInputs");
+        if (family.equals("") && given.equals("") && dob.equals("")
+                && sex.equals("") && address.equals("") && phone.equals("")) {
             return new ArrayList<>();
         }
         List<Patient> patientList = patientRepository.findAll();
@@ -54,12 +80,23 @@ public class PatientService {
         return patientList;
     }
 
-    public Patient savePatient(Patient patient) {
+    /**
+     * Save new patient.
+     * @param patient patient to add
+     * @return patient added
+     */
+    public Patient savePatient(final Patient patient) {
         logger.debug("savePatient");
         return patientRepository.save(patient);
     }
 
-    public Patient updatePatient(String id,Patient patient) {
+    /**
+     * Update patient.
+     * @param id patient id to update
+     * @param patient patient model with new information
+     * @return patient updated
+     */
+    public Patient updatePatient(final String id, final Patient patient) {
         logger.debug("updatePatient");
         Patient patientToUpdate = getPatientById(id);
         patientToUpdate.setFamily(patient.getFamily());
@@ -71,7 +108,13 @@ public class PatientService {
         return patientRepository.save(patientToUpdate);
     }
 
-    public void validationPatient(Patient patient) throws NullPointerException {
+    /**
+     * Validating input patients.
+     * Family, given, birthdate and sex are mandatory.
+     * @param patient patient to validate
+     * @throws NullPointerException input null detected error
+     */
+    public void validationPatient(final Patient patient) throws NullPointerException {
         String errorMessage1 = "";
         String errorMessage2 = "";
         String errorMessage3 = "";
@@ -94,9 +137,9 @@ public class PatientService {
             error = true;
         }
         if (error) {
-            throw new NullPointerException(errorMessage1 + " " + errorMessage2 + " " + errorMessage3 + " " + errorMessage4 + " mandatory");
+            throw new NullPointerException(
+                    errorMessage1 + " " + errorMessage2 + " "
+                            + errorMessage3 + " " + errorMessage4 + " mandatory");
         }
-
-
     }
 }

@@ -84,28 +84,28 @@ class PatientServiceTest {
 
     @Test
     void getPatientByAllInformationWithNoInfo() {
-       List<Patient> patientListTest = patientService.getPatientByAllInformation("","","","","","");
+       List<Patient> patientListTest = patientService.getPatientByAllInputs("","","","","","");
        assertEquals(0, patientListTest.size());
     }
 
     @Test
     void getPatientByAllInformationWithAllInfo() {
         when(patientRepository.findAll()).thenReturn(patientList);
-        List<Patient> patientListTest = patientService.getPatientByAllInformation("John","Connor","18-04-1989","H","1 rue ville","1234");
+        List<Patient> patientListTest = patientService.getPatientByAllInputs("John","Connor","18-04-1989","H","1 rue ville","1234");
         assertEquals(1, patientListTest.size());
     }
 
     @Test
     void getPatientByAllInformationWithSomeInformation() {
         when(patientRepository.findAll()).thenReturn(patientList);
-        List<Patient> patientListTest = patientService.getPatientByAllInformation("","","","H","","");
+        List<Patient> patientListTest = patientService.getPatientByAllInputs("","","","H","","");
         assertEquals(2, patientListTest.size());
     }
 
     @Test
     void getPatientByAllInformationWithSomeInformationAndNotFound() {
         when(patientRepository.findAll()).thenReturn(patientList);
-       assertThrows(NoSuchElementException.class, () -> patientService.getPatientByAllInformation("","","","","","9999"));
+       assertThrows(NoSuchElementException.class, () -> patientService.getPatientByAllInputs("","","","","","9999"));
     }
 
     @Test
@@ -136,8 +136,13 @@ class PatientServiceTest {
     }
 
     @Test
-    void validationPatient() {
+    void validationPatientWithError() {
         Patient patient = new Patient();
         assertThrows(NullPointerException.class, () -> patientService.validationPatient(patient));
+    }
+
+    @Test
+    void validationPatientWithNoError() {
+        patientService.validationPatient(patient1);
     }
 }

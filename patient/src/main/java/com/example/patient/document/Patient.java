@@ -11,16 +11,23 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Setter
 public class Patient {
 
+    /** Id patient. */
     @Id
     private String id;
+    /** FamilyName patient. */
     @NonNull
     private String family = "";
+    /** GivenName patient. */
     @NonNull
     private String given = "";
+    /** BirthDate patient. */
     @NonNull
     private String dob = "";
+    /** Gender patient. */
     @NonNull
-    private String sex= "";
+    private String sex = "";
+    /** Address patient. */
     private String address = "";
-    private String phone= "";
+    /** PhoneNumber patient. */
+    private String phone = "";
 }

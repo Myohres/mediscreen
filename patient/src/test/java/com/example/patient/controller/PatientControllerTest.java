@@ -1,13 +1,10 @@
 package com.example.patient.controller;
 
 import com.example.patient.document.Patient;
-import com.example.patient.repository.PatientRepository;
 import com.example.patient.service.PatientService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -44,13 +41,13 @@ class PatientControllerTest {
 
     @Test
     void getPatientByAllInformationFound() throws Exception {
-        when(patientService.getPatientByAllInformation("","","","","","")).thenReturn(new ArrayList<>());
+        when(patientService.getPatientByAllInputs("","","","","","")).thenReturn(new ArrayList<>());
         mvc.perform(get("/patient/")).andExpect(status().isOk());
     }
 
     @Test
     void getPatientByAllInformationNotFound() throws Exception {
-        when(patientService.getPatientByAllInformation(any(),any(),any(),any(),any(),any())).thenThrow(new NoSuchElementException());
+        when(patientService.getPatientByAllInputs(any(),any(),any(),any(),any(),any())).thenThrow(new NoSuchElementException());
         mvc.perform(get("/patient/")).andExpect(status().isNotFound());
     }
 

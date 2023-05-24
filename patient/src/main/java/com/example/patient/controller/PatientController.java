@@ -6,7 +6,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -15,60 +21,88 @@ import java.util.NoSuchElementException;
 @RequestMapping("/patient")
 @CrossOrigin("http://localhost:4200")
 public class PatientController {
-
-    private final Logger logger = LoggerFactory.getLogger(PatientController.class);
-
+    /**
+     * Logger control.
+     */
+    private final Logger log = LoggerFactory.getLogger(PatientController.class);
+    /**
+     * Patient service layer.
+     */
     @Autowired
-    public PatientService patientService;
+    private PatientService patientService;
 
+    /**
+     * Find Patient by all his inputs parameters.
+     * @param family familyName patient
+     * @param given GivenName patient
+     * @param dob BirthDate patient
+     * @param sex Gender patient
+     * @param address address patient
+     * @param phone phoneNumber patient
+     * @return Patient
+     */
     @GetMapping("/")
     public ResponseEntity<List<Patient>> getPatient(
-           final String family,
-           final String given,
-           final String dob,
-           final String sex,
-           final String address,
-           final String phone) {
-        logger.info("GET/family/" + family + "/given/" + given + "/birthDate/" + dob
+            final String family,
+            final String given,
+            final String dob,
+            final String sex,
+            final String address,
+            final String phone) {
+        log.info("GET/family/" + family + "/given/" + given + "/birthDate/" + dob
                 + "/sex/" + sex + "/address/" + address + "/phone/" + phone);
         try {
             return ResponseEntity.ok(
-                    patientService.getPatientByAllInformation(family, given, dob, sex, address, phone));
+                    patientService.getPatientByAllInputs(family, given, dob, sex, address, phone));
         } catch (NoSuchElementException e) {
-            logger.error("getPatient error : " + e.getMessage());
+            log.error("getPatient error : " + e.getMessage());
             return ResponseEntity.notFound().build();
         }
     }
+
+    /**
+     * Add a new Patient.
+     * @param patient Patient to add
+     * @return new Patient added
+     */
     @PostMapping("/add")
     public ResponseEntity<Patient> addPatient(
-             Patient patient) {
-        logger.info("POST/" + patient.getFamily() + "/given/" + patient.getGiven() + "/birthDate/" + patient.getDob()
-                + "/sex/" + patient.getSex() + "/address/" + patient.getAddress() + "/phone/" + patient.getPhone());
+           final Patient patient) {
+        log.info("POST/" + patient.getFamily() + "/given/" + patient.getGiven()
+                + "/birthDate/" + patient.getDob() + "/sex/" + patient.getSex()
+                + "/address/" + patient.getAddress() + "/phone/" + patient.getPhone());
         try {
             patientService.validationPatient(patient);
             return ResponseEntity.ok(patientService.savePatient(patient));
         } catch (NoSuchElementException e) {
-            logger.error("savePatient error : " + e);
+            log.error("savePatient error : " + e);
             return ResponseEntity.notFound().build();
         } catch (NullPointerException e) {
-            logger.error("savePatient error : " +e.getMessage());
+            log.error("savePatient error : " + e.getMessage());
             return ResponseEntity.badRequest().build();
         }
     }
 
+    /**
+     * Update information patient.
+     * @param id patient to update id
+     * @param patient patient model with new information
+     * @return patient updated
+     */
     @PutMapping("/update/id/{id}")
     public ResponseEntity<Patient> updatePatient(
-            @PathVariable String id, Patient patient) {
-      logger.info("PUT/patient/update/id/" + patient.getFamily() + "/given/" + patient.getGiven() + "/birthDate/" + patient.getDob()
-                + "/sex/" + patient.getSex() + "/address/" + patient.getAddress() + "/phone/" + patient.getPhone());
+            @PathVariable final String id, final Patient patient) {
+        log.info("PUT/patient/update/id/" + patient.getFamily() + "/given/" + patient.getGiven()
+                + "/birthDate/" + patient.getDob() + "/sex/" + patient.getSex()
+                + "/address/" + patient.getAddress() + "/phone/" + patient.getPhone());
         try {
             patientService.validationPatient(patient);
             return ResponseEntity.ok(patientService.updatePatient(id, patient));
         } catch (NoSuchElementException e) {
-            logger.error("updatePatient error : " + e);
+            log.error("updatePatient error : " + e);
             return ResponseEntity.notFound().build();
         } catch (NullPointerException e) {
-            logger.error("UpdatePatient error : " +e.getMessage());
+            log.error("UpdatePatient error : " + e.getMessage());
             return ResponseEntity.badRequest().build();
         }
     }
